@@ -1,4 +1,4 @@
-flask-video-streaming
+CAT-CAM
 =====================
 
 Using significant code from excellent blogs:
