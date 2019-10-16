@@ -7,24 +7,21 @@ import os
  
 
 
- def yolo_swag(image, yolo_path, confidence, threshold):
-     '''
-     Run Tiny Yolo V3 model against a provided image - returning an image
+def yolo_swag(image, yolo_path, confidence, threshold):
+    '''
+    Run Tiny Yolo V3 model against a provided image - returning an image
+    image: path to image -> as string
+    yolo_path: path to yolo cfg, and weights files -> as string
+    confidence: confidence thresholds for class probabilities
+    threshold: Non Maxima Threshold suppression threshold for reducing detection boxes
+    '''
 
-
-
-        '''
-    # construct the argument parse and parse the arguments
-    ap = argparse.ArgumentParser()
-    ap.add_argument("-i", "--image", required=True,
-        help="path to input image")
-    ap.add_argument("-y", "--yolo", required=True,
-        help="base path to YOLO directory")
-    ap.add_argument("-c", "--confidence", type=float, default=0.5,
-        help="minimum probability to filter weak detections")
-    ap.add_argument("-t", "--threshold", type=float, default=0.3,
-        help="threshold when applying non-maxima suppression")
-    args = vars(ap.parse_args())
+    args = {}
+    args.update({
+    "image":image,
+    "yolo":yolo_path,
+    "confidence":confidence,
+    "threshold":threshold})
 
     # load the COCO class labels our YOLO model was trained on
     labelsPath = os.path.sep.join([args["yolo"], "coco.names"])
@@ -37,8 +34,8 @@ import os
 
 
     # derive the paths to the YOLO weights and model configuration
-    weightsPath = os.path.sep.join([args["yolo"], "yolov3-tiny.weights"])
-    configPath = os.path.sep.join([args["yolo"], "yolov3-tiny.cfg"])
+    weightsPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
+    configPath = os.path.sep.join([args["yolo"], "yolov3.cfg"])
     
     # load our YOLO object detector trained on COCO dataset (80 classes)
     print("[INFO] loading YOLO from disk...")
@@ -129,8 +126,6 @@ import os
             cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                 0.5, color, 2)
     
-
     cv2.imwrite('prediction.jpg',image)
-    # # show the output image
-    # cv2.imshow("Image", image)
-    # cv2.waitKey(0)
+    return True
+    #return image

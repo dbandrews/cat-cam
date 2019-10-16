@@ -12,4 +12,6 @@ https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authenti
 
 
 Setup:
-- 
+- get OpenCv with python bindings pip installed, gunicorn, nginx if running externally
+- Setup passwordless logins - no root login. SSH only with RSA key
+- incrond setup - 

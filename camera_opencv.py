@@ -48,6 +48,13 @@ class Camera(BaseCamera):
                 frame = imutils.resize(img, width=600)
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
+                # encode as a jpeg image and return it
+                # grab the current timestamp and draw it on the frame
+                timestamp = datetime.datetime.now()
+                cv2.putText(frame, timestamp.strftime(
+                "%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
+                cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 1)
+
                 # if the total number of frames has reached a sufficient
                 # number to construct a reasonable background model, then
                 # continue to process the frame
@@ -58,12 +65,6 @@ class Camera(BaseCamera):
                     # cehck to see if motion was found in the frame
                     if motion is not None:
 
-                        
-                        
-                        
-                        
-                        
-                        
                         #Save image of last movement:
                         cv2.imwrite(os.path.join(os.getcwd(),'last_movement.jpg'), frame)
 
@@ -73,12 +74,7 @@ class Camera(BaseCamera):
                         cv2.rectangle(frame, (minX, minY), (maxX, maxY),
                             (0, 0, 255), 2)
 
-                        # encode as a jpeg image and return it
-                        # grab the current timestamp and draw it on the frame
-                        timestamp = datetime.datetime.now()
-                        cv2.putText(frame, timestamp.strftime(
-                        "%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 1)
+
                         
                         
 
@@ -89,5 +85,8 @@ class Camera(BaseCamera):
                 md.update(gray)
                 total += 1
 
-                #yield cv2.imencode('.jpg', img)[1].tobytes()
+
+
+            
+            #yield cv2.imencode('.jpg', img)[1].tobytes()
             yield cv2.imencode('.jpg', frame)[1].tobytes()

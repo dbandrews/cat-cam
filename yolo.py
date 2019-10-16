@@ -106,6 +106,7 @@ idxs = cv2.dnn.NMSBoxes(boxes, confidences, args["confidence"],
 	args["threshold"])
 
 
+
 #***********************************GENERATE IMAGE
 
 # ensure at least one detection exists
