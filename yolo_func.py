@@ -7,7 +7,7 @@ import os
  
 
 
-def yolo_swag(image, yolo_path, confidence, threshold):
+def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     '''
     Run Tiny Yolo V3 model against a provided image - returning an image
     image: path to image -> as string
@@ -21,7 +21,8 @@ def yolo_swag(image, yolo_path, confidence, threshold):
     "image":image,
     "yolo":yolo_path,
     "confidence":confidence,
-    "threshold":threshold})
+    "threshold":threshold,
+    "output_image": output_image})
 
     # load the COCO class labels our YOLO model was trained on
     labelsPath = os.path.sep.join([args["yolo"], "coco.names"])
@@ -126,6 +127,6 @@ def yolo_swag(image, yolo_path, confidence, threshold):
             cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                 0.5, color, 2)
     
-    cv2.imwrite('prediction.jpg',image)
+    cv2.imwrite(args['output_image'],image)
     return True
     #return image

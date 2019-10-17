@@ -88,5 +88,5 @@ class Camera(BaseCamera):
 
 
             
-            #yield cv2.imencode('.jpg', img)[1].tobytes()
-            yield cv2.imencode('.jpg', frame)[1].tobytes()
+                #yield cv2.imencode('.jpg', img)[1].tobytes()
+                yield cv2.imencode('.jpg', frame)[1].tobytes()

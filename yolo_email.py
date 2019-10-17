@@ -6,12 +6,18 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import datetime
+import os
 
 #credentials file for GMAIL emailing
 import credentials
 
+#Set PATH
+cwd = '/home/pi/cat-cam/'
+
 #get yolo swaggin:
-image = yolo_swag("last_movement.jpg","/home/pi/darknet/cfg",0.5,0.3)
+image = yolo_swag(os.path.join(cwd,'last_movement.jpg'),"/home/pi/darknet/cfg",0.5,0.3,os.path.join(cwd,'predicted.jpg'))
+
+
 
 port = 465  # For SSL
 pwd = credentials.setup['GMAIL_PWD']
@@ -24,7 +30,7 @@ subject = "Motion Capture " + timestamp.strftime(
 body = "Motion captured in the house"
 sender_email = email
 receiver_email = "dustin.brown.andrews@gmail.com"#,"magg.stuart@gmail.com"]
-cc_email = "magg.stuart@gmail.com"
+cc_email = ""#"magg.stuart@gmail.com"
 password = pwd
 
 # Create a multipart message and set headers
@@ -37,7 +43,7 @@ message["Cc"] = cc_email  # Recommended for mass emails
 # Add body to email
 message.attach(MIMEText(body, "plain"))
 
-filename = "prediction.jpg"  # In same directory as script
+filename = os.path.join(cwd,'prediction.jpg')  # In same directory as script
 
 # Open PDF file in binary mode
 with open(filename, "rb") as attachment:
