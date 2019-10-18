@@ -24,10 +24,10 @@ class Camera(BaseCamera):
 
         prev = 0
         #restrict frame rate for serving externally over slower connections. 3 works for external serving over cell service.
-        frame_rate = 3
+        frame_rate = 5
 
         #initialize motion detector class
-        md = SingleMotionDetector(accumWeight=0.1)
+        md = SingleMotionDetector(accumWeight=0.8)
         total = 0
 
         camera = cv2.VideoCapture(Camera.video_source)

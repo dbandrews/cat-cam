@@ -14,6 +14,9 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     yolo_path: path to yolo cfg, and weights files -> as string
     confidence: confidence thresholds for class probabilities
     threshold: Non Maxima Threshold suppression threshold for reducing detection boxes
+
+    returns:
+    classes detected
     '''
 
     args = {}
@@ -128,5 +131,5 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
                 0.5, color, 2)
     
     cv2.imwrite(args['output_image'],image)
-    return True
+    return classIDs
     #return image

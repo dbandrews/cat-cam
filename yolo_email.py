@@ -6,6 +6,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import datetime
+import time
 import os
 
 #credentials file for GMAIL emailing
@@ -14,60 +15,71 @@ import credentials
 #Set PATH
 cwd = '/home/pi/cat-cam/'
 
-#get yolo swaggin:
-image = yolo_swag(os.path.join(cwd,'last_movement.jpg'),"/home/pi/darknet/cfg",0.5,0.3,os.path.join(cwd,'predicted.jpg'))
+#Setup infinite loop to check every 5 seconds for modified motion capture image
 
+while True:
+    check_time = time.time()
 
+    #check if modified within last 5 seconds
+    if (check_time - os.path.getmtime(os.path.join(cwd,'last_movement.jpg')))<5:
+        
+        #get yolo swaggin:
+        classIDs = yolo_swag(os.path.join(cwd,'last_movement.jpg'),"/home/pi/darknet/cfg",0.5,0.3,os.path.join(cwd,'prediction.jpg'))
 
-port = 465  # For SSL
-pwd = credentials.setup['GMAIL_PWD']
-email = credentials.setup['GMAIL_EMAIL']
+        #Check if any classes detected
+        if len(classIDs) > 0:
 
-timestamp = datetime.datetime.now()
+            port = 465  # For SSL
+            pwd = credentials.setup['GMAIL_PWD']
+            email = credentials.setup['GMAIL_EMAIL']
 
-subject = "Motion Capture " + timestamp.strftime(
-            "%A %d %B %Y %I:%M:%S%p")
-body = "Motion captured in the house"
-sender_email = email
-receiver_email = "dustin.brown.andrews@gmail.com"#,"magg.stuart@gmail.com"]
-cc_email = ""#"magg.stuart@gmail.com"
-password = pwd
+            timestamp = datetime.datetime.now()
 
-# Create a multipart message and set headers
-message = MIMEMultipart()
-message["From"] = sender_email
-message["To"] = receiver_email
-message["Subject"] = subject
-message["Cc"] = cc_email  # Recommended for mass emails
+            subject = "Motion Capture " + timestamp.strftime(
+                        "%A %d %B %Y %I:%M:%S%p")
+            body = "Motion captured in the house"
+            sender_email = email
+            receiver_email = "dustin.brown.andrews@gmail.com"#,"magg.stuart@gmail.com"]
+            cc_email = "magg.stuart@gmail.com"
+            password = pwd
 
-# Add body to email
-message.attach(MIMEText(body, "plain"))
+            # Create a multipart message and set headers
+            message = MIMEMultipart()
+            message["From"] = sender_email
+            message["To"] = receiver_email
+            message["Subject"] = subject
+            message["Cc"] = cc_email  # Recommended for mass emails
 
-filename = os.path.join(cwd,'prediction.jpg')  # In same directory as script
+            # Add body to email
+            message.attach(MIMEText(body, "plain"))
 
-# Open PDF file in binary mode
-with open(filename, "rb") as attachment:
-    # Add file as application/octet-stream
-    # Email client can usually download this automatically as attachment
-    part = MIMEBase("application", "octet-stream")
-    part.set_payload(attachment.read())
+            filename = os.path.join(cwd,'prediction.jpg')  # In same directory as script
 
-# Encode file in ASCII characters to send by email    
-encoders.encode_base64(part)
+            # Open PDF file in binary mode
+            with open(filename, "rb") as attachment:
+                # Add file as application/octet-stream
+                # Email client can usually download this automatically as attachment
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(attachment.read())
 
-# Add header as key/value pair to attachment part
-part.add_header(
-    "Content-Disposition",
-    f"attachment; filename= {filename}",
-)
+            # Encode file in ASCII characters to send by email    
+            encoders.encode_base64(part)
 
-# Add attachment to message and convert message to string
-message.attach(part)
-text = message.as_string()
+            # Add header as key/value pair to attachment part
+            part.add_header(
+                "Content-Disposition",
+                f"attachment; filename= {filename}",
+            )
 
-# Create a secure SSL context
-context = ssl.create_default_context()
+            # Add attachment to message and convert message to string
+            message.attach(part)
+            text = message.as_string()
 
-with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
-    server.login(email, password)
-    server.sendmail(email,"dustin.brown.andrews@gmail.com", text)
+            # Create a secure SSL context
+            context = ssl.create_default_context()
+
+            with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
+                server.login(email, password)
+                server.sendmail(email,"dustin.brown.andrews@gmail.com", text)
+    else:
+        time.sleep(1)
