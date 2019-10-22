@@ -26,8 +26,8 @@ while True:
         #get yolo swaggin:
         classIDs = yolo_swag(os.path.join(cwd,'last_movement.jpg'),"/home/pi/darknet/cfg",0.5,0.3,os.path.join(cwd,'prediction.jpg'))
 
-        #Check if any classes detected
-        if len(classIDs) > 0:
+        #Check if any classes detected - just cat and person for now!
+        if len(classIDs) > 0 and ('cat' in classIDs or 'person' in classIDs):
 
             port = 465  # For SSL
             pwd = credentials.setup['GMAIL_PWD']
@@ -80,6 +80,6 @@ while True:
 
             with smtplib.SMTP_SSL("smtp.gmail.com", port, context=context) as server:
                 server.login(email, password)
-                server.sendmail(email,"dustin.brown.andrews@gmail.com", text)
+                server.sendmail(email,message['To'],text)
     else:
         time.sleep(1)
