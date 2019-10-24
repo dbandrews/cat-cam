@@ -27,7 +27,7 @@ class Camera(BaseCamera):
         frame_rate = 5
 
         #initialize motion detector class
-        md = SingleMotionDetector(accumWeight=0.8)
+        md = SingleMotionDetector(accumWeight=0.3)
         total = 0
 
         camera = cv2.VideoCapture(Camera.video_source)

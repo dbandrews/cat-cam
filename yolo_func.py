@@ -116,6 +116,7 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     #***********************************GENERATE IMAGE
 
     # ensure at least one detection exists
+    detected_classes = []
     if len(idxs) > 0:
         # loop over the indexes we are keeping
         for i in idxs.flatten():
@@ -129,7 +130,8 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
             text = "{}: {:.4f}".format(LABELS[classIDs[i]], confidences[i])
             cv2.putText(image, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX,
                 0.5, color, 2)
+            detected_classes.append(LABELS[classIDs[i]])
     
     cv2.imwrite(args['output_image'],image)
-    return classIDs
+    return detected_classes
     #return image
