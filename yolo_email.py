@@ -40,7 +40,7 @@ while True:
             body = "Motion captured in the house"
             sender_email = email
             receiver_email = "dustin.brown.andrews@gmail.com"#,"magg.stuart@gmail.com"]
-            cc_email = "magg.stuart@gmail.com"
+            #cc_email = "magg.stuart@gmail.com"
             password = pwd
 
             # Create a multipart message and set headers

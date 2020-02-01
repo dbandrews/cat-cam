@@ -40,6 +40,7 @@ class Camera(BaseCamera):
 
             time_elapsed = time.time() - prev
 
+            #Restrict frame rate for streaming over cellular?
             if time_elapsed > 1./frame_rate:
                 #reset counter
                 prev = time.time()

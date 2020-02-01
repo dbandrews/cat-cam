@@ -9,7 +9,7 @@ import os
 
 def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     '''
-    Run Tiny Yolo V3 model against a provided image - returning an image
+    Run Yolo V3 model against a provided image - returning an image
     image: path to image -> as string
     yolo_path: path to yolo cfg, and weights files -> as string
     confidence: confidence thresholds for class probabilities
