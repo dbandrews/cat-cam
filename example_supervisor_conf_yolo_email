@@ -1,0 +1,9 @@
+[program:yolo_email]
+command=/home/pi/.virtualenvs/cv/bin/python3 /home/pi/cat-cam/yolo_email.py
+directory=/home/pi/cat-cam
+user=pi
+autostart=true
+autorestart=true
+stopasgroup=true
+killasgroup=true
+
