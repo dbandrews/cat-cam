@@ -39,8 +39,7 @@ while True:
                         "%A %d %B %Y %I:%M:%S%p")
             body = "Motion captured in the house"
             sender_email = email
-            receiver_email = "dustin.brown.andrews@gmail.com"#,"magg.stuart@gmail.com"]
-            #cc_email = "magg.stuart@gmail.com"
+            receiver_email = "dustin.brown.andrews@gmail.com"
             password = pwd
 
             # Create a multipart message and set headers
@@ -48,7 +47,7 @@ while True:
             message["From"] = sender_email
             message["To"] = receiver_email
             message["Subject"] = subject
-            message["Cc"] = cc_email  # Recommended for mass emails
+
 
             # Add body to email
             message.attach(MIMEText(body, "plain"))
