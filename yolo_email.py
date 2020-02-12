@@ -39,7 +39,7 @@ while True:
                         "%A %d %B %Y %I:%M:%S%p")
             body = "Motion captured in the house"
             sender_email = email
-            receiver_email = "dustin.brown.andrews@gmail.com"
+            receiver_email = credentials.setup['RECEIVER_EMAIL']
             password = pwd
 
             # Create a multipart message and set headers
