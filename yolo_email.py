@@ -6,6 +6,7 @@ from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import datetime
+import pandas as pd
 import time
 import os
 
@@ -14,6 +15,9 @@ import credentials
 
 #Set PATH
 cwd = '/home/pi/cat-cam/'
+
+#Get object log to append class detections to
+object_log = pd.read_csv(os.path.join(cwd,'object_log.csv'),index_col=False )
 
 #Setup infinite loop to check every 5 seconds for modified motion capture image
 
@@ -28,14 +32,21 @@ while True:
 
         #Check if any classes detected - just cat and person for now!
         if len(classIDs) > 0 and ('cat' in classIDs or 'person' in classIDs):
+            
+            timestamp = datetime.datetime.now()
+
+            #Append to tracker log and save
+            incr_df = pd.DataFrame([[x,timestamp] for x in classIDs],columns=("class","timestamp"))
+            object_log = pd.concat([object_log,incr_df])
+            object_log.to_csv(os.path.join(cwd,'object_log.csv'),index=False)
 
             port = 465  # For SSL
             pwd = credentials.setup['GMAIL_PWD']
             email = credentials.setup['GMAIL_EMAIL']
 
-            timestamp = datetime.datetime.now()
+            
 
-            subject = "Motion Capture " + timestamp.strftime(
+            subject = ''.join(x + '|' for x in classIDs) + " detected " + timestamp.strftime(
                         "%A %d %B %Y %I:%M:%S%p")
             body = "Motion captured in the house"
             sender_email = email

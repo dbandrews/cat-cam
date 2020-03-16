@@ -2,6 +2,8 @@
 from importlib import import_module
 import os
 from flask import Flask, render_template, Response
+from werkzeug.utils import secure_filename
+import pandas as pd
 import time
 
 
@@ -10,7 +12,6 @@ import time
 from camera_opencv import Camera
 
 app = Flask(__name__)
-
 
 @app.route('/')
 def index():
@@ -26,6 +27,13 @@ def gen(camera):
         yield (b'--frame\r\n'
                b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
 
+@app.route('/email_switch_off')
+def switch_email_off():
+    pd.DataFrame({'status':['email_off']}).to_csv("email_switch.csv")
+
+@app.route('/email_switch_on')
+def switch_email_on():
+    pd.DataFrame({'status':['email_on']}).to_csv("email_switch.csv")
 
 @app.route('/video_feed')
 def video_feed():
