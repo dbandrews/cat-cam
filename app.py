@@ -30,10 +30,12 @@ def gen(camera):
 @app.route('/email_switch_off')
 def switch_email_off():
     pd.DataFrame({'status':['email_off']}).to_csv("email_switch.csv")
+    return render_template('index.html')
 
 @app.route('/email_switch_on')
 def switch_email_on():
     pd.DataFrame({'status':['email_on']}).to_csv("email_switch.csv")
+    return render_template('index.html')
 
 @app.route('/video_feed')
 def video_feed():
