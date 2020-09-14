@@ -1,7 +1,11 @@
 CAT-CAM: Motion Detection and Object Detection for Raspberry Pi 4
 =====================
 
-A Flask web streaming video app with motion detection. Motion capture images are run through Yolo V3 object detection and emailed using a configured Gmail account. Running the full Yolo v3 model takes ~7-10 seconds/image on the stock Raspberry Pi 4 with 4 GB RAM. If consecutive motion is detected this will introduce a lag in motion detection and emails of objects detected.
+A Flask web streaming video app with motion and object detection. 
+- Motion capture images are run through Yolo V3 object detection and emailed using a configured Gmail account. 
+- Running the full Yolo v3 model takes ~7-10 seconds/image on the stock Raspberry Pi 4 with 4 GB RAM. If consecutive motion is detected this will introduce a lag in motion detection and emails of objects detected. 
+- A separate process for running the Yolo object detection was created to prevent issues with Flask app being bogged down. Flask app writes a motion capture image (without bounding boxes) and this gets run through the Yolo process separately.
+
 
 Object detection and emails can be switched on or off from the Flask app. Object detections are logged to a csv as well.
 
@@ -16,11 +20,13 @@ Setup:
 - Setup "credentials.py" in the same format given in example_credentials.py. Be sure to enable access for less secure apps to this email account (hopefully not your personal account): https://myaccount.google.com/lesssecureapps
 
 TODO:
-- [ ] Document/fix hardcoded paths/options
+- [ ] Config file for yolo file paths, web page title, FPS settings
+- [ ] Full walk through of install
 
 Based on code from excellent blogs: <br>
 https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/ <br>
 http://blog.miguelgrinberg.com/post/flask-video-streaming-revisited <br>
+https://www.pyimagesearch.com/2018/11/12/yolo-object-detection-with-opencv/ <br>
 
 Links for Deploying Publicly Accesible Websites: <br>
 https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux <br>
