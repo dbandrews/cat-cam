@@ -18,17 +18,8 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     returns:
     classes detected
     '''
-
-    args = {}
-    args.update({
-    "image":image,
-    "yolo":yolo_path,
-    "confidence":confidence,
-    "threshold":threshold,
-    "output_image": output_image})
-
     # load the COCO class labels our YOLO model was trained on
-    labelsPath = os.path.sep.join([args["yolo"], "coco.names"])
+    labelsPath = os.path.sep.join([yolo_path, "coco.names"])
     LABELS = open(labelsPath).read().strip().split("\n")
     
     # initialize a list of colors to represent each possible class label
@@ -38,8 +29,8 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
 
 
     # derive the paths to the YOLO weights and model configuration
-    weightsPath = os.path.sep.join([args["yolo"], "yolov3.weights"])
-    configPath = os.path.sep.join([args["yolo"], "yolov3.cfg"])
+    weightsPath = os.path.sep.join([yolo_path, "yolov3.weights"])
+    configPath = os.path.sep.join([yolo_path, "yolov3.cfg"])
     
     # load our YOLO object detector trained on COCO dataset (80 classes)
     print("[INFO] loading YOLO from disk...")
@@ -47,7 +38,7 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
 
 
     # load our input image and grab its spatial dimensions
-    image = cv2.imread(args["image"])
+    image = cv2.imread(image)
     (H, W) = image.shape[:2]
     
     # determine only the *output* layer names that we need from YOLO
@@ -87,7 +78,7 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     
             # filter out weak predictions by ensuring the detected
             # probability is greater than the minimum probability
-            if confidence > args["confidence"]:
+            if confidence > confidence:
                 # scale the bounding box coordinates back relative to the
                 # size of the image, keeping in mind that YOLO actually
                 # returns the center (x, y)-coordinates of the bounding
@@ -109,8 +100,8 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
 
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
-    idxs = cv2.dnn.NMSBoxes(boxes, confidences, args["confidence"],
-        args["threshold"])
+    idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence,
+        threshold)
 
 
     #***********************************GENERATE IMAGE
@@ -132,6 +123,6 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
                 0.5, color, 2)
             detected_classes.append(LABELS[classIDs[i]])
     
-    cv2.imwrite(args['output_image'],image)
+    cv2.imwrite(output_image,image)
     return detected_classes
-    #return image
+

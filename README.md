@@ -15,6 +15,8 @@ Setup:
 - Setup Supervisord tasks for both gunicorn server, and the Yolo_email script. Example supervisor configuration files included (example_supervisor_conf_*****). Be sure to change paths in these files to reflect your folder structure.
 - Setup "credentials.py" in the same format given in example_credentials.py. Be sure to enable access for less secure apps to this email account (hopefully not your personal account): https://myaccount.google.com/lesssecureapps
 
+TODO:
+- [ ] Document/fix hardcoded paths/options
 
 Based on code from excellent blogs: <br>
 https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/ <br>
