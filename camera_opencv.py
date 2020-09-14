@@ -23,11 +23,11 @@ class Camera(BaseCamera):
     def frames():
 
         prev = 0
-        #restrict frame rate for serving externally over slower connections
+        #restrict frame rate for serving externally over slower connections. 3 works for external serving over cell service.
         frame_rate = 5
 
         #initialize motion detector class
-        md = SingleMotionDetector(accumWeight=0.1)
+        md = SingleMotionDetector(accumWeight=0.3)
         total = 0
 
         camera = cv2.VideoCapture(Camera.video_source)
@@ -40,14 +40,14 @@ class Camera(BaseCamera):
 
             time_elapsed = time.time() - prev
 
+            #Restrict frame rate for streaming over cellular?
             if time_elapsed > 1./frame_rate:
                 #reset counter
                 prev = time.time()
 
                 #get frame and resize,convert to gray
-                frame = imutils.resize(img, width=800)
+                frame = imutils.resize(img, width=600)
                 gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
 
                 # encode as a jpeg image and return it
                 # grab the current timestamp and draw it on the frame
@@ -55,7 +55,6 @@ class Camera(BaseCamera):
                 cv2.putText(frame, timestamp.strftime(
                 "%A %d %B %Y %I:%M:%S%p"), (10, frame.shape[0] - 10),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 1)
-
 
                 # if the total number of frames has reached a sufficient
                 # number to construct a reasonable background model, then
@@ -66,12 +65,20 @@ class Camera(BaseCamera):
 
                     # cehck to see if motion was found in the frame
                     if motion is not None:
+
+                        #Save image of last movement:
+                        cv2.imwrite(os.path.join(os.getcwd(),'last_movement.jpg'), frame)
+
                         # unpack the tuple and draw the box surrounding the
                         # "motion area" on the output frame
                         (thresh, (minX, minY, maxX, maxY)) = motion
                         cv2.rectangle(frame, (minX, minY), (maxX, maxY),
                             (0, 0, 255), 2)
+
+
                         
+                        
+
                         #INSERT EMAIL HERE
                 
                 # update the background model and increment the total number
@@ -79,5 +86,8 @@ class Camera(BaseCamera):
                 md.update(gray)
                 total += 1
 
+
+
+            
                 #yield cv2.imencode('.jpg', img)[1].tobytes()
                 yield cv2.imencode('.jpg', frame)[1].tobytes()
