@@ -7,7 +7,7 @@ import os
  
 
 
-def yolo_swag(image, yolo_path, confidence, threshold, output_image):
+def yolo_swag(image, yolo_path, confidence_threshold, nms_threshold, output_image):
     '''
     Run Yolo V3 model against a provided image - returning an image
     image: path to image -> as string
@@ -24,8 +24,7 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     
     # initialize a list of colors to represent each possible class label
     np.random.seed(42)
-    COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),
-        dtype="uint8")
+    COLORS = np.random.randint(0, 255, size=(len(LABELS), 3),dtype="uint8")
 
 
     # derive the paths to the YOLO weights and model configuration
@@ -78,7 +77,7 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
     
             # filter out weak predictions by ensuring the detected
             # probability is greater than the minimum probability
-            if confidence > confidence:
+            if confidence > confidence_threshold:
                 # scale the bounding box coordinates back relative to the
                 # size of the image, keeping in mind that YOLO actually
                 # returns the center (x, y)-coordinates of the bounding
@@ -100,8 +99,7 @@ def yolo_swag(image, yolo_path, confidence, threshold, output_image):
 
     # apply non-maxima suppression to suppress weak, overlapping bounding
     # boxes
-    idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence,
-        threshold)
+    idxs = cv2.dnn.NMSBoxes(boxes, confidences, confidence_threshold,nms_threshold)
 
 
     #***********************************GENERATE IMAGE
