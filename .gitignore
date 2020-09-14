@@ -2,6 +2,9 @@
 __pycache__/
 *.py[cod]
 
+#Log of object detections
+object_log.csv
+
 # C extensions
 *.so
 

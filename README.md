@@ -16,14 +16,13 @@ Setup:
 - Setup "credentials.py" in the same format given in example_credentials.py. Be sure to enable access for less secure apps to this email account (hopefully not your personal account): https://myaccount.google.com/lesssecureapps
 
 
-Based on code from excellent blogs:
-https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/
-http://blog.miguelgrinberg.com/post/video-streaming-with-flask
-http://blog.miguelgrinberg.com/post/flask-video-streaming-revisited
+Based on code from excellent blogs: <br>
+https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/ <br>
+http://blog.miguelgrinberg.com/post/flask-video-streaming-revisited <br>
 
-Links for Deploying Publicly Accesible Websites:
-https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux
-https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+Links for Deploying Publicly Accesible Websites: <br>
+https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvii-deployment-on-linux <br>
+https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04 <br>
 
 
 
