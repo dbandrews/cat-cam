@@ -1,3 +1,8 @@
+# Utilizing code from:
+# https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/
+# Accessed October 2019.
+
+
 # import the necessary packages
 import numpy as np
 import imutils
