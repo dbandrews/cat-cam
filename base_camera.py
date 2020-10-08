@@ -74,7 +74,6 @@ class BaseCamera(object):
         """Return the current camera frame."""
         BaseCamera.last_access = time.time()
 
-        # wait for a signal from the camera thread - comment out for max'd out performance?
         BaseCamera.event.wait()
         BaseCamera.event.clear()
 
@@ -95,10 +94,4 @@ class BaseCamera(object):
             BaseCamera.event.set()  # send signal to clients, commented out for max'd speed?
             time.sleep(0)
             
-            # if there hasn't been any clients asking for frames in
-            # the last 10 seconds then stop the thread
-            # if time.time() - BaseCamera.last_access > 10:
-            #     frames_iterator.close()
-            #     print('Stopping camera thread due to inactivity.')
-            #     break
         BaseCamera.thread = None
