@@ -1,3 +1,9 @@
+# Based on code from:
+# https://github.com/miguelgrinberg/flask-video-streaming
+# Accessed: October 2019
+
+
+
 #!/usr/bin/env python
 from importlib import import_module
 import os
