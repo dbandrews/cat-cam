@@ -2,8 +2,12 @@
 __pycache__/
 *.py[cod]
 
-#Log of object detections
+# Log of object detections
 object_log.csv
+
+# Motion capture images
+last_movement.jpg
+prediction.jpg
 
 # C extensions
 *.so

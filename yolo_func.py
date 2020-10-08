@@ -12,14 +12,14 @@ import os
 
 def yolo_swag(image, yolo_path, confidence_threshold, nms_threshold, output_image):
     """
-    Run Yolo V3 model against a provided image - returning an image
+    Run Yolo V4 model against a provided image - returning an image
 
     Parameters
     ----------
     image: string
         Path to image
     yolo_path: string
-        Path to yolo cfg, and weights files
+        Path to yolo cfg, and weights files. Must be stored in same place.
     confidence: float
         Confidence thresholds for class probabilities
     threshold: float
@@ -31,6 +31,11 @@ def yolo_swag(image, yolo_path, confidence_threshold, nms_threshold, output_imag
     -------
     list[string]:
         classes detected
+
+    Side Effects
+    ------------
+    image:
+        saves output_image 
 
     """
     # load the COCO class labels our YOLO model was trained on
