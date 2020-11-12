@@ -2,6 +2,9 @@ CAT-CAM: Motion Detection and Object Detection for Raspberry Pi 4
 =====================
 
 A Flask web streaming video app with motion and object detection emails. 
+![gif_demo](webcam_demo.gif)
+![yolo_demo](cat-cam-sofa.jpg)
+
 - Motion capture images are run through Yolo V3 object detection and emailed using a configured Gmail account. 
 - Running the full Yolo v3 model takes ~7-10 seconds/image on the stock Raspberry Pi 4 with 4 GB RAM. If consecutive motion is detected this will introduce a lag in motion detection and emails of objects detected. 
 - A separate process for running the Yolo object detection was created to prevent issues with Flask app being bogged down. Flask app writes a motion capture image (without bounding boxes) and this gets run through the Yolo process separately.
