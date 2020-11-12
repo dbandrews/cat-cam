@@ -19,7 +19,11 @@ Quick Steps:
 - Configure nginx for proper forwarding of requests to server 80 -> 443 (https)
 - Can build in basic password protection using Nginx and SSL
 - Download and install darknet (https://pjreddie.com/darknet/)
-- Confirm paths for darknet to be run from yolo**** scripts
+- Confirm all settings in `config.py`
+  * `web_page_title`: Use this to modify the title text shown on the webpage and browser tab.
+  * `fps`: Frames per second the video stream will be limited to. I found that serving the stream over cellular data when out of the local network would introduce a fair bit of      lag and setting this ~ 5 will make it stay in sync.
+  * `yolo_path`: Path to the YOLOV3.cfg, YOLOV3.weights files on your Raspberry Pi
+  * `email_object_classes`: The class names you want email notifications about when there is a motion capture. Check the file coco.names in the `darknet/cfg` folder for all the options. Emails are only sent when one of these classes is detected (I was getting a fair few emails about chairs being detected before I put this in ;) )
 - Setup Supervisord tasks for both gunicorn server, and the Yolo_email script. Example supervisor configuration files included (example_supervisor_conf_*****). Be sure to change paths in these files to reflect your folder structure.
 - Setup "credentials.py" in the same format given in example_credentials.py for a **Gmail** acount. Be sure to enable access for less secure apps to this email account (hopefully not your personal account): https://myaccount.google.com/lesssecureapps
 
