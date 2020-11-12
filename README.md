@@ -9,7 +9,11 @@ A Flask web streaming video app with motion and object detection emails.
 
 Object detection and emails can be switched on or off from the Flask app front end. Object detections are logged to a csv as well.
 
-Setup:
+## Setup
+[Full walk through of install and configuration here.](https://dbandrews.com/2020/09/28/cat-cam-1/)
+
+
+Quick Steps:
 - get OpenCv 3.4.3.18 with python bindings pip installed (preferably into a virtualenv), gunicorn, nginx if wanting to run externally outside of local Wifi network
 - Setup passwordless logins for the Pi - no root login with passwords. SSH only with RSA key - remote development from Visual Studio Code or IDE of choice is recommended.
 - Configure nginx for proper forwarding of requests to server 80 -> 443 (https)
@@ -19,9 +23,6 @@ Setup:
 - Setup Supervisord tasks for both gunicorn server, and the Yolo_email script. Example supervisor configuration files included (example_supervisor_conf_*****). Be sure to change paths in these files to reflect your folder structure.
 - Setup "credentials.py" in the same format given in example_credentials.py for a **Gmail** acount. Be sure to enable access for less secure apps to this email account (hopefully not your personal account): https://myaccount.google.com/lesssecureapps
 
-TODO:
-- [ ] Config file for yolo file paths, web page title, FPS settings
-- [ ] Full walk through of install
 
 Based on code from excellent blogs: <br>
 https://www.pyimagesearch.com/2019/09/02/opencv-stream-video-to-web-browser-html-page/ <br>
