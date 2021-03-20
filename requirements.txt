@@ -5,7 +5,7 @@ greenlet==0.4.15
 gunicorn==19.9.0
 imutils==0.5.3
 itsdangerous==1.1.0
-Jinja2==2.10.1
+Jinja2==2.11.3
 MarkupSafe==1.1.1
 numpy==1.17.2
 opencv-python==3.4.3.18
